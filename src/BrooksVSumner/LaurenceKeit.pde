@@ -12,7 +12,8 @@ class LaurenceKeit extends Player
   @Override
   public void useAbility(int jumpX, int jumpY) { //args unused here: these arguments only apply for PrestonBrooks, but are needed since overriding methods must be identical to the parent method definition
     if(super.getCooldown() == 0) {
-      
+      int[] position = super.position();
+      rect(position[0],position[1], 220,220);
       super.setAbilityUsed(true);
     }
   }
