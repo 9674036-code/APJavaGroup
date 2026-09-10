@@ -1,5 +1,5 @@
 //Mo Spiegel | Period 4B | AP Computer Programming
-
+// Ethan Tang - Temporary Manager for the Main File| 4B | AP Computer Programming 
 /** 
 PROJECT REFLECTION: 
 Your two objects were created from the same class. What did they share, and what remained independent for each object?
@@ -46,12 +46,7 @@ In this reimagination, Sumner and Brooks have an epic 'caning battle'
 **/
 
 //instantiate player classes
-Player[] players = {
-  new PrestonBrooks(100, 0, 50, 250),
-  new CharlesSumner(100, 0, 300, 250),
-  new CharlesSumner(100,0,450,250),
-  new PrestonBrooks(100,0,50,250),//3rd Preston Brooks; serves no purpose, but required by the assignment (must have 3 object instantiations in the collection)
-};
+ArrayList<Player> players = new ArrayList();
 
 
 // Control flags:
@@ -75,6 +70,7 @@ char screen = 'p'; // 'p': play screen | '1': player 1 win screen | '2': player 
 // Array for storing the player data (p1 score, p1 health, p2 score, p2 health) that will be drawn to the screen
 // 2-Dimensional: Stores two sublists corresponding to each player, each containing health and sc
 int[][] playerData = new int[4][2]; 
+int playerChoose=0;
 
 // Setup (call once at start)
 void setup(){
@@ -84,8 +80,8 @@ void setup(){
   PURPOSE: initialize images (for cane and player avatar)
   that can't be created prior to setup being called, 
   i.e. can't be set in the constructor at class instantiation) **/
-  for (int i = 0; i < players.length; i++ ) {
-    players[i].playerSetup();
+  for (int i = 0; i < players.size(); i++ ) {
+    players.get(i).playerSetup();
   }
 }
 
@@ -120,9 +116,9 @@ void keyPressed() {
   if(key == 'q') {
     if(!p1Strike) { //Insures that a hit only registers the first time the attack key is pressed instead of registering over and over while held
       p1Strike = true;
-      if(players[1].hitbox(players[0].position()[0] + 100,players[0].position()[1]+30)) { //Check if player 2's hitbox is contacted; pass in position of player 1's cane
-        players[1].takeDamage(2); //Pass in damage
-        players[0].addScore(1); //Update score
+      if(players.get(1).hitbox(players.get(0).position()[0] + 100,players.get(0).position()[1]+30)) { //Check if player 2's hitbox is contacted; pass in position of player 1's cane
+        players.get(1).takeDamage(2); //Pass in damage
+        players.get(0).addScore(1); //Update score
         println("Damage"); 
       }
     }
@@ -130,23 +126,23 @@ void keyPressed() {
   if(key == 'o') {
     if(!p2Strike) {
       p2Strike = true;
-      if(players[0].hitbox(players[1].position()[0] - 50,players[1].position()[1]+30)) {
-        players[0].takeDamage(2);
-        players[1].addScore(1);
+      if(players.get(0).hitbox(players.get(1).position()[0] - 50,players.get(1).position()[1]+30)) {
+        players.get(0).takeDamage(2);
+        players.get(1).addScore(1);
         println("Damage");
       }  
     }
   }
   if(key == 'e') {
-    players[0].useAbility(players[1].position()[0], players[1].position()[1]); // jump attack; pass in p2's position using the getter 
+    players.get(0).useAbility(players.get(1).position()[0], players.get(1).position()[1]); // jump attack; pass in p2's position using the getter 
   }
   if(key == ' ' && (screen == '1' || screen == '2')) {
     screen = 'p';
     //Reset players (reinstantiate)
-    players[0].reset(100, 0, 50, 250);
-    players[1].reset(100, 0, 400, 250);
+    players.get(0).reset(100, 0, 50, 250);
+    players.get(1).reset(100, 0, 400, 250);
   } else if (key == ' ') { //dodge move
-    players[1].useAbility(0,0); //dummy parameters: Don't mean anything, but required for method overriding (parameters must be identical with parent class method)
+    players.get(1).useAbility(0,0); //dummy parameters: Don't mean anything, but required for method overriding (parameters must be identical with parent class method)
   }
 }
 //Key release logic; sets corresponding boolean control flags to false once key is released
@@ -187,61 +183,65 @@ void keyReleased() {
 // interaction/draw loop
 void draw() {
   switch(screen) { //screen manager
+    case 's': // start screen 
+      background(255,255,255);
+      text("Choose your player, P for Preston Brooks, C for Charles Sumner",10,20);
+      break;
     case 'p': // play screen
       background(255,255,255);
       
       //Get player 1 and player 2 health and score (accessed with the 'getter' status()), insert to playerData
-      for(int i = 0; i < players.length; i ++) {
-        playerData[i] = players[i].status();
+      for(int i = 0; i < players.size(); i ++) {
+        playerData[i] = players.get(i).status();
       }
       
       //display health and score
       textAlign(CORNER);
       fill(0,0,0);
       textSize(15);
-      text("Preston Brooks Health: " + str(playerData[0][0]) , 10, 20);
-      text("Preston Brooks Score: " + str(playerData[0][1]), 10, 35);
-      text("Charles Sumner Health: " + str(playerData[1][0]), 300, 20);
-      text("Charles Sumner Score: " + str(playerData[1][1]), 300, 35);
+      text("Player 1 Health: " + str(playerData[0][0]) , 10, 20);
+      text("Player 1 Score: " + str(playerData[0][1]), 10, 35);
+      text("Player 2 Health: " + str(playerData[1][0]), 300, 20);
+      text("Player 2 Score: " + str(playerData[1][1]), 300, 35);
       
       //Draw the players (show cane being slammed if attack keys have been pressed)
-      players[0].drawPlayer(p1Strike);
-      players[1].drawPlayer(p2Strike);
+      players.get(0).drawPlayer(p1Strike);
+      players.get(1).drawPlayer(p2Strike);
     
       // move players based on boolean control flags
       if(p1Up) {
-        players[0].move('u'); //char argument denotes which direction to move in
+        players.get(0).move('u'); //char argument denotes which direction to move in
       }
        if(p1Down) {
-        players[0].move('d');
+        players.get(0).move('d');
       }
        if(p1Left) {
-        players[0].move('l');
+        players.get(0).move('l');
       }
        if(p1Right) {
-        players[0].move('r');
+        players.get(0).move('r');
       }
       if(p2Up) {
-        players[1].move('u');
+        players.get(1).move('u');
       }
        if(p2Down) {
-        players[1].move('d');
+        players.get(1).move('d');
       }
        if(p2Left) {
-        players[1].move('l');
+        players.get(1).move('l');
       }
        if(p2Right) {
-        players[1].move('r');
+        players.get(1).move('r');
       }
       //Update screen if either of the player's health drops to 0
-      if (players[0].status()[0] == 0) {
+      if (players.get(0).status()[0] == 0) {
         screen = '2';
-      } else if (players[1].status()[0] == 0) {
+      } else if (players.get(1).status()[0] == 0) {
         screen = '1';
       }
       //Increment ability cooldowns
-      for(int i = 0; i<players.length; i++) {
-        players[i].incrementCooldown();
+      for(int i = 0; i<players.size(); i++) {
+        players.get(i).incrementCooldown();
       }
       break;
     case '1': //player 1 win screen
