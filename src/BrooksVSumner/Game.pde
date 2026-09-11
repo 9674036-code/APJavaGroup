@@ -135,6 +135,7 @@ void keyPressed() {
   }
   if(key == 'e') {
     players.get(0).useAbility(players.get(1).position()[0], players.get(1).position()[1]); // jump attack; pass in p2's position using the getter 
+    
   }
   if(key == ' ' && (screen == '1' || screen == '2')) {
     screen = 'p';
