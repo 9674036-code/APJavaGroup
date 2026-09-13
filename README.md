@@ -1,5 +1,6 @@
 # APJavaGroup
 ## Mo
+### NEVERMIND DONT DO THIS:
 Added char weaponType argument to playerSetup() in the parent function; If your guys' player object uses a cane, pass in 'c' to the playerSetup() child class method, if its a pistol pass in 'p':
 
 Example for players with canes:
