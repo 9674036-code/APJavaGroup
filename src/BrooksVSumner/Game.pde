@@ -59,6 +59,7 @@ boolean p2Up = false;
 boolean p2Down = false;
 boolean p2Left = false;
 boolean p2Right = false;
+boolean keyUp=true;;
 
 // booleans for tracking whether the attack key is being held down for each player
 boolean p1Strike = false;
@@ -111,6 +112,30 @@ void keyPressed() {
   } 
   if(key == 'l') {
     p2Right = true;
+  }
+
+  if(key == '1' && screen =='s' && keyUp){
+    if(players.size()==0){
+      players.add(new PrestonBrooks(100, 0, 50, 250))
+    }else {
+      players.add(new PrestonBrooks(100, 0, 300, 250))
+    }
+  }
+
+  if(key == '2' && screen =='s' && keyUp){
+    if(players.size()==0){
+      players.add(new CharlesSumner(100, 0, 50, 250))
+    }else {
+      players.add(new CharlesSumner(100, 0, 300, 250))
+    }
+  }
+
+  if(key == '3' && screen =='s' && keyUp){
+    if(players.size()==0){
+      players.add(new LaurenceKeit(100, 0, 50, 250))
+    }else {
+      players.add(new LaurenceKeit(100, 0, 300, 250))
+    }
   }
   
   if(key == 'q') {
@@ -186,7 +211,11 @@ void draw() {
   switch(screen) { //screen manager
     case 's': // start screen 
       background(255,255,255);
-      text("Choose your player, P for Preston Brooks, C for Charles Sumner",10,20);
+      text("Player "+players.size()+", Choose Your Character",10,20);
+      text("Choose your player, 1 for Preston Brooks, 2 for Charles Sumner, and 3 for Laurence Keit",10,50);
+      if(players.size()==2){
+        screen='p';
+      }
       break;
     case 'p': // play screen
       background(255,255,255);
