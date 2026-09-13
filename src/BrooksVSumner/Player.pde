@@ -7,6 +7,7 @@ class Player {
   private PImage img; // avatar image
   private PImage caneImg_norm; // cane image in rest form
   private PImage caneImg_strike; // cane image in striking/attacking/slamming form
+  private PImage pistImg; // pistol image
   private boolean abilityUsed; //track if the ability is used
   private int coolDown; //track cooldown for abilities (based on the 30 fps loop in draw)
   
@@ -21,10 +22,20 @@ class Player {
   }
   
   //Setter for images
+  
+  // For normal players (not Laurence Keitt): no pistol image required
   public void setImg(String imgName, String caneImgName, String caneStrikeImgName) {
     this.img = loadImage(imgName);
     this.caneImg_norm = loadImage(caneImgName);
     this.caneImg_strike = loadImage(caneStrikeImgName);
+  }
+
+  // OVERLOADING method: For Laurence Keitt, pass in additional pistImg parameter
+  public void setImg(String imgName, String caneImgName, String caneStrikeImgName, String pistImgName) {
+    this.img = loadImage(imgName);
+    this.caneImg_norm = loadImage(caneImgName);
+    this.caneImg_strike = loadImage(caneStrikeImgName);
+    this.pistImg = loadImage(pistImgName); // load pistol image
   }
   
   //Player setup; initialize images
@@ -33,11 +44,19 @@ class Player {
     img.resize(50,75);
     caneImg_norm.resize(70,70);
     caneImg_strike.resize(75,50);
+    if(pistImg != null) {
+      pistImg.resize(50,30);
+    }
   }
   
   //getter for images
   public PImage[] getImg() {
-    PImage[] returnVal = {caneImg_norm, caneImg_strike};
+    PImage[] returnVal;
+    if (pistImg != null) {
+      returnVal = new PImage[]{caneImg_norm, caneImg_strike, pistImg};
+    } else {
+      returnVal = new PImage[]{caneImg_norm, caneImg_strike};
+    }
     return returnVal;
   }
   
