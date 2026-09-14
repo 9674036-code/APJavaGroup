@@ -5,12 +5,6 @@ class PrestonBrooks extends Player {
   }
   
   @Override
-  public void playerSetup() {
-    super.setImg("PrestonBrooks.jpg", "Cane2_norm.png", "Cane2_strike.png"); //pass in Preston Brooks images into the parent class img setter
-    super.playerSetup();
-  }
-  
-  @Override
   public void drawPlayer(boolean strike) {
     super.drawPlayer(strike); // call the parent class draw method to display the avatar
     if(strike) { // display cane slammed down if striking
