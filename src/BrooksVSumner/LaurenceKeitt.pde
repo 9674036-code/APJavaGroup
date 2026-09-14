@@ -1,15 +1,11 @@
 // paul tokhtuev | 4B | Ap Computer Science
-class LaurenceKeit extends Player
+class LaurenceKeitt extends Player
 {
-  public LaurenceKeit(int health, int score, int x, int y) 
+  public LaurenceKeitt(int health, int score, int x, int y) 
   {
     super(health, score, x, y);
   }
-  @Override //Override annotation; denote the follwoing method overrides the parent class method
-  public void playerSetup() {
-    super.setImg("LaurenceKeitt.jpeg", "Cane1_norm.png", "Cane1_strike.png"); 
-    super.playerSetup(); // call the parent class setup method to resize images
-  }
+
   
   @Override
   public void incrementCooldown() { //update cooldown (called in draw)
