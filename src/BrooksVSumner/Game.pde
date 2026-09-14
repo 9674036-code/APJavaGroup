@@ -66,7 +66,7 @@ boolean p1Strike = false;
 boolean p2Strike = false;
 
 // char which tracks the current screen (later used in switch block screen manager)
-char screen = 'p'; // 'p': play screen | '1': player 1 win screen | '2': player 2 win screen
+char screen = 's'; // 'p': play screen | '1': player 1 win screen | '2': player 2 win screen
 
 // Array for storing the player data (p1 score, p1 health, p2 score, p2 health) that will be drawn to the screen
 // 2-Dimensional: Stores two sublists corresponding to each player, each containing health and sc
@@ -81,9 +81,6 @@ void setup(){
   PURPOSE: initialize images (for cane and player avatar)
   that can't be created prior to setup being called, 
   i.e. can't be set in the constructor at class instantiation) **/
-  for (int i = 0; i < players.size(); i++ ) {
-    players.get(i).playerSetup();
-  }
 }
 
 // Key detection logic
@@ -116,25 +113,25 @@ void keyPressed() {
 
   if(key == '1' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new PrestonBrooks(100, 0, 50, 250))
+      players.add(new PrestonBrooks(100, 0, 50, 250));
     }else {
-      players.add(new PrestonBrooks(100, 0, 300, 250))
+      players.add(new PrestonBrooks(100, 0, 300, 250));
     }
   }
 
   if(key == '2' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new CharlesSumner(100, 0, 50, 250))
+      players.add(new CharlesSumner(100, 0, 50, 250));
     }else {
-      players.add(new CharlesSumner(100, 0, 300, 250))
+      players.add(new CharlesSumner(100, 0, 300, 250));
     }
   }
 
   if(key == '3' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new LaurenceKeit(100, 0, 50, 250))
+      players.add(new LaurenceKeitt(100, 0, 50, 250));
     }else {
-      players.add(new LaurenceKeit(100, 0, 300, 250))
+      players.add(new LaurenceKeitt(100, 0, 300, 250));
     }
   }
   
@@ -211,10 +208,18 @@ void draw() {
   switch(screen) { //screen manager
     case 's': // start screen 
       background(255,255,255);
-      text("Player "+players.size()+", Choose Your Character",10,20);
-      text("Choose your player, 1 for Preston Brooks, 2 for Charles Sumner, and 3 for Laurence Keit",10,50);
+      textAlign(CENTER);
+      fill(0,0,0);
+      textSize(20);
+      text("Player "+(players.size()+1)+", Choose Your Character",250,20);
+      text("Choose your player, 1 for Preston Brooks, 2 for Charles\n Sumner, and 3 for Laurence Keit",250,80);
       if(players.size()==2){
         screen='p';
+        players.get(0).setImg(players.get(0).getClass().getSimpleName()+".jpg","Cane1_norm.png","Cane1_strike.png");
+        players.get(1).setImg(players.get(1).getClass().getSimpleName()+".jpg","Cane2_norm.png","Cane2_strike.png");
+        for (int i = 0; i < players.size(); i++ ) {
+          players.get(i).playerSetup();
+        }
       }
       break;
     case 'p': // play screen
