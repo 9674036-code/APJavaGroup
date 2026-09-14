@@ -4,12 +4,6 @@ class CharlesSumner extends Player {
     super(health, score, x, y); //pass in constructor variables to the parent class
   }
   
-  @Override //Override annotation; denote the follwoing method overrides the parent class method
-  public void playerSetup() {
-    super.setImg("CharlesSummer.jpg", "Cane1_norm.png", "Cane1_strike.png"); //pass Charles Sumner images into the parent class setter
-    super.playerSetup(); // call the parent class setup method to resize images
-  }
-  
   @Override
   public void drawPlayer(boolean strike) {
     super.drawPlayer(strike); // call the parent class draw method to display avatar image
