@@ -10,45 +10,53 @@ class Player {
   private PImage caneImg_norm; // cane image in rest form
   private PImage caneImg_strike; // cane image in striking/attacking/slamming form
   private PImage pistImg; // pistol image
-  private boolean abilityUsed; //track if the ability is used
+  private boolean abilityUsed; //track if the ability is used 
   private int coolDown; //track cooldown for abilities (based on the 30 fps loop in draw)
-  private int playerNum; // track player 1 vs player 2
+  
+  //Kirubashini S
+  float speed = 6; //general speed
+  float normalSpeed = 6; //player's normal speed
+  float boostSpeed = 10; // increased speed when player click shift
   
   //constructor
-  public Player(int health, int score, int x, int y,int playerNum) {
+  public Player(int health, int score, int x, int y,int xOffset, int yOffset) {
     this.health = health;
     this.score = score;
     this.x = x;
     this.y = y;
+    this.xOffset = xOffset;
+    this.yOffset = yOffset;
     this.abilityUsed = false;
     this.coolDown = 0;
-    this.yOffset = 30;
-    this.playerNum = playerNum;
-    if(playerNum == 1) {this.xOffset = 40;}
-    else if(playerNum ==2) {this.xOffset = -60;}  
-
+  }
+  
+  public void powerBoost() {
   }
   
   //Setter for images
   
-  public void setImg(String imgName) {
+  // For normal players (not Laurence Keitt): no pistol image required
+  public void setImg(String imgName, String caneImgName, String caneStrikeImgName) {
     this.img = loadImage(imgName);
-    if(playerNum == 1) {
-      this.caneImg_norm = loadImage("Cane2_norm.png");
-      this.caneImg_strike = loadImage("Cane2_strike.png");
-    } else if (playerNum == 2) {
-      this.caneImg_norm = loadImage("Cane1_norm.png");
-      this.caneImg_strike = loadImage("Cane1_strike.png");
-    }
+    this.caneImg_norm = loadImage(caneImgName);
+    this.caneImg_strike = loadImage(caneStrikeImgName);
+  }
+
+  // OVERLOADING method: For Laurence Keitt, pass in additional pistImg parameter
+  public void setImg(String imgName, String caneImgName, String caneStrikeImgName, String pistImgName) {
+    this.img = loadImage(imgName);
+    this.caneImg_norm = loadImage(caneImgName);
+    this.caneImg_strike = loadImage(caneStrikeImgName);
+    this.pistImg = loadImage(pistImgName); // load pistol image
   }
   
   //Player setup; initialize images
   // Cannot be done in the constructor since the class is instantiated prior to 'void setup()' in the main file being called; images can only be loaded after 'void setup()' is called
   public void playerSetup() {
-    img.resize(50,75);
-    caneImg_norm.resize(70,70);
-    caneImg_strike.resize(75,50);
-    if(pistImg != null) {
+    if (img != null) img.resize(50,75);
+    if (caneImg_norm != null) caneImg_norm.resize(70,70);
+    if (caneImg_strike != null) caneImg_strike.resize(75,50);
+    if (pistImg != null) {
       pistImg.resize(50,30);
     }
   }
@@ -96,6 +104,7 @@ class Player {
         return false;
       }
     }
+    
   
   //modify health upon damage
   public void takeDamage(int damage) {
@@ -110,23 +119,23 @@ class Player {
   // move (update x and y values) based on the direction argument
   public void move(char direction) {
     if(direction == 'u') {
-      if(y > 0) { //check for screen edge before movign
-        y -= 6;
+      if(y > 0) {  //check for screen edge before movign
+        y -= speed;
        // yOffset -= 6;
       }
     } else if(direction == 'd') { 
       if(y < height-70) { //check for screen edge before movign
-        y += 6;
+        y += speed;
        // yOffset += 6;
       }
     } else if(direction == 'l') {
       if(x>0) { //check for screen edge before movign
-        x -= 6;
+        x -= speed;
        // xOffset -= 6;
       }
     } else if(direction == 'r') {
       if(x<width-50) { //check for screen edge before movign
-        x+= 6;
+        x+= speed;
         //xOffset += 6;
       }
     }
@@ -134,16 +143,10 @@ class Player {
   
   //draw the player
   public void drawPlayer(boolean strike) { //NOTE: the arg is not used here, but is still denoted so that overriding can be done in the subclasses where the arg is used
-    image(img, x, y); //display avatar on screen
-    if(strike) 
-    { //if attacking, slam cane down (call image data with getter)
-      image(caneImg_strike, x+ xOffset, y+yOffset);
-    } else
-    { //resting cane position
-      image(caneImg_norm, x+xOffset,y);
+    if (img != null) {
+      image(img, x, y); //display avatar on screen
     }
   }
-  
   public void reset(int health, int score, int x, int y) { //reset member vars
     this.health = health;
     this.score = score;
