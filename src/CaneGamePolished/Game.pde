@@ -113,25 +113,25 @@ void keyPressed() {
 
   if(key == '1' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new PrestonBrooks(100, 0, 50, 250,players.size()+1));
+      players.add(new PrestonBrooks(100, 0, 50, 250,40,-30, 6.0f, 6.0f, 8.0f ));
     }else {
-      players.add(new PrestonBrooks(100, 0, 300, 250,players.size()+1));
+      players.add(new PrestonBrooks(100, 0, 300, 250,-60,-30, 6.0f, 6.0f, 8.0f));
     }
   }
 
   if(key == '2' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new CharlesSumner(100, 0, 50, 250,players.size()+1));
+      players.add(new CharlesSumner(100, 0, 50, 250,40,-30));
     }else {
-      players.add(new CharlesSumner(100, 0, 300, 250,players.size()+1));
+      players.add(new CharlesSumner(100, 0, 300, 250,-60,-30));
     }
   }
 
   if(key == '3' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new LaurenceKeitt(100, 0, 50, 250,players.size()+1));
+      players.add(new LaurenceKeitt(100, 0, 50, 250, 40,-30));
     }else {
-      players.add(new LaurenceKeitt(100, 0, 300, 250,players.size()+1));
+      players.add(new LaurenceKeitt(100, 0, 300, 250, -60,-30));
     }
   }
   
@@ -156,10 +156,13 @@ void keyPressed() {
     }
   }
   if(key == 'e') {
-    players.get(0).useAbility(players.get(1).position()[0], players.get(1).position()[1]); // jump attack; pass in p2's position using the getter
-    if(players.get(0) instanceof LaurenceKeitt) {
-      if (players.get(1).hitbox(players.get(1).position()[0], players.get(0).position()[1]+30) && players.get(0).getCooldown()==0) {
-        players.get(1).takeDamage(10);
+    players.get(0).useAbility(players.get(1).position()[0], players.get(1).position()[1]); // jump attack; pass in p2's position using the getter 
+    if(players.get(0).getClass() == LaurenceKeitt.class && players.get(0).getCooldown() == 0)
+    {
+     if(abs(players.get(0).position()[1]-players.get(1).position()[1]) < 50) { //Check if player 2's hitbox is contacted; pass in position of player 1's cane
+        players.get(1).takeDamage(2); //Pass in damage
+        players.get(0).addScore(1); //Update score
+        println("Damage"); 
       }
     }
   }
@@ -168,11 +171,14 @@ void keyPressed() {
     //Reset players (reinstantiate)
     players.get(0).reset(100, 0, 50, 250);
     players.get(1).reset(100, 0, 400, 250);
-  } else if (key == ' ') { 
-    players.get(1).useAbility(players.get(0).position()[0], players.get(0).position()[1]); 
-    if(players.get(1) instanceof LaurenceKeitt) {
-      if (players.get(0).hitbox(players.get(0).position()[0], players.get(1).position()[1]+30) && players.get(1).getCooldown()==0) {
-        players.get(0).takeDamage(10);
+  } else if (key == ' ') { //dodge move
+    players.get(1).useAbility(players.get(0).position()[0], players.get(0).position()[1]); // Both now do it so that both players are able to jump attack
+    if(players.get(1).getClass() == LaurenceKeitt.class && players.get(1).getCooldown() == 0)
+    {
+     if(abs(players.get(0).position()[1]-players.get(1).position()[1]) < 50) { //Check if player 2's hitbox is contacted; pass in position of player 1's cane
+        players.get(0).takeDamage(2); //Pass in damage
+        players.get(1).addScore(1); //Update score
+        println("Damage"); 
       }
     }
   }
@@ -223,14 +229,24 @@ void draw() {
       text("Player "+(players.size()+1)+", Choose Your Character",250,20);
       text("Choose your player, 1 for Preston Brooks, 2 for Charles\n Sumner, and 3 for Laurence Keit",250,80);
       if(players.size()==2){
-        for (int i = 0; i < players.size(); i++ ) {
-          players.get(i).playerSetup();
-        }
         screen='p';
+        players.get(0).setImg(players.get(0).getClass().getSimpleName()+".jpg","Cane2_norm.png","Cane2_strike.png","FlintlockLeft.png");
+        players.get(1).setImg(players.get(1).getClass().getSimpleName()+".jpg","Cane1_norm.png","Cane1_strike.png","Flintlock.png");
+        players.get(0).playerSetup(); // Run playerSetup to resize images
+        players.get(1).playerSetup(); // Run playerSetup to resize images
+        for (int i = 0; i < players.size(); i++ ) {
+        }
       }
+      
+      
       break;
+      
     case 'p': // play screen
       background(255,255,255);
+      
+      for (int i = 0; i < players.size(); i++) {
+        players.get(i).powerBoost();
+      }
       
       //Get player 1 and player 2 health and score (accessed with the 'getter' status()), insert to playerData
       for(int i = 0; i < players.size(); i ++) {
@@ -291,7 +307,7 @@ void draw() {
       fill(255,255,255);
       textAlign(CENTER);
       textSize(30);
-      text("Player 1 wins!",width/2,height/2);
+      text("Preston Brooks Wins!",width/2,height/2);
       textSize(15);
       text("Press the spacebar to play again", width/2, height/2+20);
       break;
@@ -300,7 +316,7 @@ void draw() {
       fill(255,255,255);
       textAlign(CENTER);
       textSize(30);
-      text("Player 2 wins!",width/2,height/2);
+      text("Charles Sumner Wins!",width/2,height/2);
       textSize(15);
       text("Press the spacebar to play again", width/2, height/2+20);      
       break;
