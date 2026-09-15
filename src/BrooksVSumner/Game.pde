@@ -113,9 +113,9 @@ void keyPressed() {
 
   if(key == '1' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new PrestonBrooks(100, 0, 50, 250,40,-30));
+      players.add(new PrestonBrooks(100, 0, 50, 250,40,-30, 6.0f, 6.0f, 8.0f ));
     }else {
-      players.add(new PrestonBrooks(100, 0, 300, 250,-60,-30));
+      players.add(new PrestonBrooks(100, 0, 300, 250,-60,-30, 6.0f, 6.0f, 8.0f));
     }
   }
 
@@ -232,13 +232,21 @@ void draw() {
         screen='p';
         players.get(0).setImg(players.get(0).getClass().getSimpleName()+".jpg","Cane2_norm.png","Cane2_strike.png","FlintlockLeft.png");
         players.get(1).setImg(players.get(1).getClass().getSimpleName()+".jpg","Cane1_norm.png","Cane1_strike.png","Flintlock.png");
+        players.get(0).playerSetup(); // Run playerSetup to resize images
+        players.get(1).playerSetup(); // Run playerSetup to resize images
         for (int i = 0; i < players.size(); i++ ) {
-          players.get(i).playerSetup();
         }
       }
+      
+      
       break;
+      
     case 'p': // play screen
       background(255,255,255);
+      
+      for (int i = 0; i < players.size(); i++) {
+        players.get(i).powerBoost();
+      }
       
       //Get player 1 and player 2 health and score (accessed with the 'getter' status()), insert to playerData
       for(int i = 0; i < players.size(); i ++) {
