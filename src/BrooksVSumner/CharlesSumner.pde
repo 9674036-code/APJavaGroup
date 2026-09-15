@@ -1,17 +1,20 @@
 class CharlesSumner extends Player {
     
-  public CharlesSumner(int health, int score, int x, int y) {
-    super(health, score, x, y); //pass in constructor variables to the parent class
+  public CharlesSumner(int health, int score, int x, int y, int xOffset, int yOffset) {
+     super(health, score, x, y, xOffset, yOffset); //pass in constructor variables to the parent class
   }
   
   @Override
   public void drawPlayer(boolean strike) {
     super.drawPlayer(strike); // call the parent class draw method to display avatar image
-    if(strike) { //if attacking, slam cane down (call image data with getter)
-      image(super.getImg()[1], super.position()[0]-60, super.position()[1]+30);
-    } else { //resting cane position
-      image(super.getImg()[0], super.position()[0]-60,super.position()[1]);
+   if(strike) 
+    { //if attacking, slam cane down (call image data with getter)
+      image(super.getImg()[1], super.position()[0]+ super.Offsets()[0], super.position()[1]-super.Offsets()[1]);
+    } else
+    { //resting cane position
+      image(super.getImg()[0], super.position()[0]+super.Offsets()[0],super.position()[1] );
     }
+    
   }
   
   @Override

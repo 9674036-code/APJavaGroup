@@ -4,6 +4,8 @@ class Player {
   private int score;
   private int x; //x position
   private int y; // y position
+  private int xOffset; // offsets for the cane that will change if it is on either left or right side
+  private int yOffset;
   private PImage img; // avatar image
   private PImage caneImg_norm; // cane image in rest form
   private PImage caneImg_strike; // cane image in striking/attacking/slamming form
@@ -12,11 +14,13 @@ class Player {
   private int coolDown; //track cooldown for abilities (based on the 30 fps loop in draw)
   
   //constructor
-  public Player(int health, int score, int x, int y) {
+  public Player(int health, int score, int x, int y,int xOffset, int yOffset) {
     this.health = health;
     this.score = score;
     this.x = x;
     this.y = y;
+    this.xOffset = xOffset;
+    this.yOffset = yOffset;
     this.abilityUsed = false;
     this.coolDown = 0;
   }
@@ -79,6 +83,11 @@ class Player {
     return returnVal;
   }
   
+  public int[] Offsets() {
+    int[] returnVal = {xOffset,yOffset};
+    return returnVal;
+  }
+  
   // check if hitbox is contacted
   public boolean hitbox(int hitX, int hitY) { //takes position of cane as argument
       if(hitX <= x+50 && hitX >=x && hitY >= y && hitY <= y+75) { //conditional statement to check if contacted
@@ -103,18 +112,22 @@ class Player {
     if(direction == 'u') {
       if(y > 0) { //check for screen edge before movign
         y -= 6;
+       // yOffset -= 6;
       }
     } else if(direction == 'd') { 
       if(y < height-70) { //check for screen edge before movign
         y += 6;
+       // yOffset += 6;
       }
     } else if(direction == 'l') {
       if(x>0) { //check for screen edge before movign
         x -= 6;
+       // xOffset -= 6;
       }
     } else if(direction == 'r') {
       if(x<width-50) { //check for screen edge before movign
         x+= 6;
+        //xOffset += 6;
       }
     }
   }

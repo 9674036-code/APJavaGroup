@@ -113,25 +113,25 @@ void keyPressed() {
 
   if(key == '1' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new PrestonBrooks(100, 0, 50, 250));
+      players.add(new PrestonBrooks(100, 0, 50, 250,40,-30));
     }else {
-      players.add(new PrestonBrooks(100, 0, 300, 250));
+      players.add(new PrestonBrooks(100, 0, 300, 250,-60,-30));
     }
   }
 
   if(key == '2' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new CharlesSumner(100, 0, 50, 250));
+      players.add(new CharlesSumner(100, 0, 50, 250,40,-30));
     }else {
-      players.add(new CharlesSumner(100, 0, 300, 250));
+      players.add(new CharlesSumner(100, 0, 300, 250,-60,-30));
     }
   }
 
   if(key == '3' && screen =='s' && keyUp){
     if(players.size()==0){
-      players.add(new LaurenceKeitt(100, 0, 50, 250));
+      players.add(new LaurenceKeitt(100, 0, 50, 250, 40,-30));
     }else {
-      players.add(new LaurenceKeitt(100, 0, 300, 250));
+      players.add(new LaurenceKeitt(100, 0, 300, 250, -60,-30));
     }
   }
   
@@ -215,8 +215,8 @@ void draw() {
       text("Choose your player, 1 for Preston Brooks, 2 for Charles\n Sumner, and 3 for Laurence Keit",250,80);
       if(players.size()==2){
         screen='p';
-        players.get(0).setImg(players.get(0).getClass().getSimpleName()+".jpg","Cane1_norm.png","Cane1_strike.png");
-        players.get(1).setImg(players.get(1).getClass().getSimpleName()+".jpg","Cane2_norm.png","Cane2_strike.png");
+        players.get(0).setImg(players.get(0).getClass().getSimpleName()+".jpg","Cane2_norm.png","Cane2_strike.png","FlintlockLeft.png");
+        players.get(1).setImg(players.get(1).getClass().getSimpleName()+".jpg","Cane1_norm.png","Cane1_strike.png","Flintlock.png");
         for (int i = 0; i < players.size(); i++ ) {
           players.get(i).playerSetup();
         }
