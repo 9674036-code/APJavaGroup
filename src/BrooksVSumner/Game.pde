@@ -157,7 +157,14 @@ void keyPressed() {
   }
   if(key == 'e') {
     players.get(0).useAbility(players.get(1).position()[0], players.get(1).position()[1]); // jump attack; pass in p2's position using the getter 
-    
+    if(players.get(0).getClass() == LaurenceKeitt.class && players.get(0).getCooldown() == 0)
+    {
+     if(abs(players.get(0).position()[1]-players.get(1).position()[1]) < 50) { //Check if player 2's hitbox is contacted; pass in position of player 1's cane
+        players.get(1).takeDamage(2); //Pass in damage
+        players.get(0).addScore(1); //Update score
+        println("Damage"); 
+      }
+    }
   }
   if(key == ' ' && (screen == '1' || screen == '2')) {
     screen = 'p';
@@ -165,7 +172,15 @@ void keyPressed() {
     players.get(0).reset(100, 0, 50, 250);
     players.get(1).reset(100, 0, 400, 250);
   } else if (key == ' ') { //dodge move
-    players.get(1).useAbility(0,0); //dummy parameters: Don't mean anything, but required for method overriding (parameters must be identical with parent class method)
+    players.get(1).useAbility(players.get(0).position()[0], players.get(0).position()[1]); // Both now do it so that both players are able to jump attack
+    if(players.get(1).getClass() == LaurenceKeitt.class && players.get(1).getCooldown() == 0)
+    {
+     if(abs(players.get(0).position()[1]-players.get(1).position()[1]) < 50) { //Check if player 2's hitbox is contacted; pass in position of player 1's cane
+        players.get(0).takeDamage(2); //Pass in damage
+        players.get(1).addScore(1); //Update score
+        println("Damage"); 
+      }
+    }
   }
 }
 //Key release logic; sets corresponding boolean control flags to false once key is released
