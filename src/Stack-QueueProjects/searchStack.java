@@ -1,9 +1,10 @@
+# Mo Spiegel | Basic web search functionality, with backward and forwards movement
+
 import java.util.Stack;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 
-public class Main {
+public class searchStack {
     public static void main(String[] args) {
         Stack<String> browsingHistory = new Stack<>();
         Scanner scanner = new Scanner(System.in);
@@ -15,22 +16,26 @@ public class Main {
         while(true) {
             System.out.println("Input the name of a website you would like to go to, or enter 'z' to return to the previous page, or enter 'f' to go forward. Enter 'q' to quit.");
             String input = scanner.nextLine();
-            if(input == "z") {
-                try {
-                    trace.add(browsingHistory.pop());
+            if(input.equals("z")) {
+                if(browsingHistory.size() > 1) {
+                    browsingHistory.pop();
+                    trace.add(browsingHistory.peek());
                     opTrace.add("z");
-                } catch(EmptyStackException e) {
+                } else {
                     System.out.println("No website to return to.");
-                }
-            } else if (input == "f") {
-                if(opTrace.get(opTrace.size()-1) == "z") {
+                    System.out.println("");
+                } 
+            } else if (input.equals("f")) {
+                if(opTrace.get(opTrace.size()-1).equals("z")) {
                     browsingHistory.push(trace.get(trace.size()-2));
-                    opTrace.add("z");
+                    opTrace.add("f");
                     trace.add(trace.get(trace.size()-2));
                 } else {
                     System.out.println("No website to go forward to.");
+                    System.out.println("");
                 }
-            } else if (input == "q") {
+            } else if (input.equals("q")) {
+                System.out.println("");
                 break;
             } else {
                 opTrace.add("search");
@@ -38,10 +43,18 @@ public class Main {
                 browsingHistory.push(input);
             }
             
-            System.out.println("You are now at " + browsingHistory.peek() + ".");
+            try {
+                System.out.println("You are now at " + browsingHistory.peek() + ".");
+            } catch(Exception e) {
+                continue;
+            }
             System.out.println("");
         }
+        
+        System.out.println("Current stack: " + browsingHistory);
+        System.out.println("Stack trace: " + trace);
+        System.out.println("User operation trace: " + opTrace);
 
         scanner.close();
     }
-}
+} 
