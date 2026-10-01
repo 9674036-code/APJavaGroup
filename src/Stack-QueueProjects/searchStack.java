@@ -1,4 +1,4 @@
-# Mo Spiegel | Basic web search functionality, with backward and forwards movement
+// Mo Spiegel | Basic web search functionality, with backward and forwards movement
 
 import java.util.Stack;
 import java.util.Scanner;
