@@ -1,4 +1,3 @@
-package APCSA.RecipeApp;
 import java.util.Scanner;
 
 public class RecipeApp {
