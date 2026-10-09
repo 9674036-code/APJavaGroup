@@ -1,4 +1,3 @@
-package APCSA.RecipeApp;
 
 public abstract class CookingPlan {
     private String dishName;
