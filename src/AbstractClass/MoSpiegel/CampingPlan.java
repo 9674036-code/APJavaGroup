@@ -1,4 +1,3 @@
-package APCSA.RecipeApp;
 
 public class CampingPlan extends CookingPlan {
 
