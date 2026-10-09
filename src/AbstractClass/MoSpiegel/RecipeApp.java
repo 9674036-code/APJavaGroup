@@ -1,3 +1,5 @@
+// Mo Spiegel | Period 4B
+
 import java.util.Scanner;
 
 public class RecipeApp {
