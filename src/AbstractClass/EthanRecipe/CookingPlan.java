@@ -1,4 +1,4 @@
-package Recipe;
+package EthanRecipe;
 import java.util.HashMap;
 
 public abstract class CookingPlan {

@@ -1,4 +1,4 @@
-package Recipe;
+package EthanRecipe;
 
 public class StoveTopPlan extends CookingPlan{
     public String plan;

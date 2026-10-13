@@ -1,4 +1,4 @@
-package Recipe;
+package EthanRecipe;
 
 public class CampingPlan extends CookingPlan{
     public String plan;
