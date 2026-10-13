@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Recipe{
     static Scanner input = new Scanner(System.in);
     static int ans;
+    static String dish;
     static ArrayList<CookingPlan> wPlan = new ArrayList<>();
     public static void main(String[] args){
         wPlan.add(new StoveTopPlan("dish"));
@@ -16,9 +17,16 @@ public class Recipe{
                 if (ans < 0 || ans >2){
                     throw new NumberFormatException();
                 }
+                System.out.println("Choose a dish displayed or input on of your own: ");
+                dish=input.nextLine();
+                if (! wPlan.get(ans).intTemp.containsKey(dish)){
+                    System.out.println("You are about to add the new dish "+ dish +", please input the input the final internal temperature of the dish if F as an integer: ");
+                    wPlan.get(ans).intTemp.put(dish, Integer.parseInt(input.nextLine()));
+                }
+                wPlan.get(ans).dish=dish;
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("input one of the displayed integers ");
+                System.out.println("Input one of the displayed integers or a integer temperature");
             }
         }
         System.out.println(wPlan.get(ans).cook());
