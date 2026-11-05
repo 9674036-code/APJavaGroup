@@ -5,10 +5,10 @@
 ### Method 1: Recursion with Conditional Statements
 LET String location = "start"  
 METHOD choice(String location):  
-  IF location == "end location 1":  
-    OUTPUT "end scenario 1"  
-    RETURN  
-  ELSE IF location == "end location 2":  
+&nbsp;  IF location == "end location 1":  
+&nbsp;&nbsp;    OUTPUT "end scenario 1"  
+&nbsp;&nbsp;    RETURN  
+&nbsp;  ELSE IF location == "end location 2":  
     OUTPUT "end scenario 2"  
     RETURN  
   ELSE IF location == "end location 3":  
