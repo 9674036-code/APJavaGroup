@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class ArraySolution {
     public static Scanner input = new Scanner(System.in);
     public static String [][] output={
-        {"In woods hear twig snap, press 0 to run away and 1 to investigate?"},
-        {"You run away successfully press 0 to go home and 1 to go deeper into the woods?", "You discover the presence of another creature, press 0 to befriend the creature and 1 to attack it"},
-        {"**You enjoy a peaceful but hungry day in cave", "Press 0 to look for prey and 1 to look for berries", "**The creature shares its food, and you go home fed", "**Your were mauled to death"},
+        {"In woods you hear a twig snap, press 0 to run away and 1 to investigate?"},
+        {"You run away successfully, press 0 to go home and 1 to go deeper into the woods?", "You discover the presence of another creature, press 0 to befriend the creature and 1 to attack it"},
+        {"**You enjoy a peaceful but hungry day in cave", "Press 0 to look for prey and 1 to look for berries", "**The creature shares its food, and you go home fed", "**You were mauled to death"},
         {"You find prey, press 0 to attempt to catch it and 1 to wait.", "In the woods you find two kinds of berries press 0 to pick the purple one and 1 to pick the teal one"},
         {"**Prey captured, you go home fed","**Prey runs away, you die hungry","**You go home fed","**You consumed a poison berry and died"}
     };
