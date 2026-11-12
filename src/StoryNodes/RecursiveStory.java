@@ -60,16 +60,16 @@ public class Main {
         Node endFriend = new Node("Ending: go home fed");
         Node endDefeated = new Node("Ending: you ate a poison berry, you died ");
 
-        //  endings to Choice Nodes
+        // choices that lead to endings
         Node attackPrey = new Node("Do you (1) Attack now or (2) Wait", endPreyCaptured, endPreyEscaped);
         Node pickBerry = new Node("Do you eat (1) Purple berry or (2) Teal berry?", endPurpleBerry, endTealBerry);
         Node investigateSound = new Node("Do you (1) Befriend creature or (2) Attack?", endFriend, endDefeated);
 
-        // the middle paths
+        // chocies that lead to the ending choices
         Node deeperWoods = new Node("Go deeper into the woods. Do you (1) Look for prey or (2) Look for berry?", attackPrey, pickBerry);
         Node runAway = new Node("You run away. Do you (1) Go Home or (2) Go deeper into the woods?", endPeaceful, deeperWoods);
 
-        // starting node
+        // starting choice
         Node start = new Node("In woods and hear a twig snap. Do you (1) Run away or (2) Investigate?", runAway, investigateSound);
 
         // Start game
